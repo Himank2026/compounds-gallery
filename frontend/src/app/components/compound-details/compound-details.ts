@@ -27,23 +27,24 @@ export class CompoundDetailsComponent implements OnInit {
   }
 
   loadCompound(id: number): void {
-    this.loading = true;
-    this.compoundService.getCompoundById(id).subscribe({
-      next: (response: any) => {
-        if (response && response.success) {
-          this.compound = response.data;
-        } else {
-          this.compound = response;
-        }
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error loading compound:', error);
-        this.loading = false;
-        this.router.navigate(['/compounds']);
+  this.loading = true;
+  this.compoundService.getCompoundById(id).subscribe({
+    next: (response: any) => {
+      // Since the data is inside response.data, we assign that to our variable
+      if (response && response.success) {
+        this.compound = response.data;
+      } else {
+        this.compound = response; // Fallback in case the structure changes
       }
-    });
-  }
+      this.loading = false;
+    },
+    error: (error) => {
+      console.error('Error loading compound:', error);
+      this.loading = false;
+      this.router.navigate(['/compounds']);
+    }
+  });
+}
 
   goBack(): void {
     this.router.navigate(['/compounds']);
@@ -54,26 +55,7 @@ export class CompoundDetailsComponent implements OnInit {
       this.router.navigate(['/compounds', this.compound.id, 'edit']);
     }
   }
+  
+}
 
-  // FIXED: This is now inside the class brackets
-  deleteCompound(): void {
-    if (!this.compound) return;
 
-    const confirmDelete = confirm(`Are you sure you want to delete ${this.compound.name}?`);
-    
-    if (confirmDelete) {
-      this.loading = true;
-      this.compoundService.deleteCompound(this.compound.id).subscribe({
-        next: () => {
-          alert('Compound deleted successfully!');
-          this.router.navigate(['/compounds']);
-        },
-        error: (error) => {
-          console.error('Delete error:', error);
-          this.loading = false;
-          alert('Failed to delete compound.');
-        }
-      });
-    }
-  }
-} // This is the final closing brace for the class
