@@ -1,17 +1,26 @@
+// src/app/components/compound-edit/compound-edit.ts
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CompoundService } from '../../services/compound.service';
-import { Compound } from '../../models/compound.model';
+import { CompoundService, Compound } from '../../services/compound.service';
 
 @Component({
   selector: 'app-compound-edit',
-  templateUrl: './compound-edit.component.html',
-  styleUrls: ['./compound-edit.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './compound-edit.html',
+  styleUrls: ['./compound-edit.css']
 })
 export class CompoundEditComponent implements OnInit {
   compound: Compound | null = null;
-  saving = false;
-  compoundId: number = 0;
+  loading: boolean = true;
+  saving: boolean = false;
+
+  // Form fields
+  name: string = '';
+  image: string = '';
+  description: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -20,65 +29,72 @@ export class CompoundEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.compoundId = +params['id'];
-      if (this.compoundId) {
-        this.loadCompound(this.compoundId);
-      }
-    });
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.loadCompound(id);
   }
 
   loadCompound(id: number): void {
-    this.compoundService.getCompoundById(id).subscribe({
-      next: (response) => {
-        if (response.success && !Array.isArray(response.data)) {
-          this.compound = { ...response.data };
-        }
-      },
-      error: (err) => {
-        alert('Failed to load compound');
-        this.goBack();
-        console.error('Error loading compound:', err);
-      }
-    });
-  }
+  this.loading = true;
+  this.compoundService.getCompoundById(id).subscribe({
+    next: (response: any) => {
+      // FIX: Access the .data property from the backend response
+      const data = response.data || response;
+      
+      this.compound = data;
+      this.name = data.name || '';
+      this.image = data.image || '';
+      this.description = data.description || '';
+      
+      this.loading = false;
+    },
+    error: (error) => {
+      console.error('Error loading compound:', error);
+      this.loading = false;
+      this.router.navigate(['/compounds']);
+    }
+  });
+}
 
   saveChanges(): void {
     if (!this.compound) return;
 
-    if (!this.compound.name || !this.compound.image) {
-      alert('Please fill in all required fields');
+    if (!this.name.trim()) {
+      alert('Name is required!');
+      return;
+    }
+
+    if (!this.description.trim()) {
+      alert('Description is required!');
       return;
     }
 
     this.saving = true;
 
-    this.compoundService.updateCompound(this.compoundId, {
-      name: this.compound.name,
-      image: this.compound.image,
-      description: this.compound.description
-    }).subscribe({
+    const updatedData = {
+      name: this.name.trim(),
+      image: this.image.trim(),
+      description: this.description.trim()
+    };
+
+    this.compoundService.updateCompound(this.compound.id, updatedData).subscribe({
       next: (response) => {
-        if (response.success) {
-          alert('Compound updated successfully!');
-          this.router.navigate(['/compounds', this.compoundId]);
-        }
         this.saving = false;
+        alert('Compound updated successfully!');
+        this.router.navigate(['/compounds', this.compound!.id]);
       },
-      error: (err) => {
-        alert('Failed to update compound');
+      error: (error) => {
+        console.error('Error updating compound:', error);
         this.saving = false;
-        console.error('Error updating compound:', err);
+        alert('Failed to update compound!');
       }
     });
   }
 
-  goBack(): void {
-    this.router.navigate(['/compounds', this.compoundId]);
+  cancel(): void {
+    if (this.compound) {
+      this.router.navigate(['/compounds', this.compound.id]);
+    } else {
+      this.router.navigate(['/compounds']);
+    }
   }
-
-  onImageError(event: any): void {
-    event.target.src = 'https://via.placeholder.com/200x150?text=Preview';
-  }
-}
 }

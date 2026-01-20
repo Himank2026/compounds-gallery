@@ -1,67 +1,64 @@
-<div class="edit-container">
-  <button (click)="goBack()" class="back-button">
-    ← Cancel
-  </button>
+<!-- src/app/components/compound-edit/compound-edit.component.html -->
+<div class="container">
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading compound...</p>
+  </div>
 
-  <div class="edit-card">
-    <h1 class="edit-title">Edit Compound</h1>
+  <!-- Edit Form -->
+  <div *ngIf="!loading && compound" class="edit-container">
+    <div class="header">
+      <h1>✏️ Edit Compound</h1>
+      <button class="cancel-btn" (click)="cancel()">✕</button>
+    </div>
 
-    <form *ngIf="compound" (ngSubmit)="saveChanges()" class="edit-form">
+    <form class="edit-form" (ngSubmit)="saveChanges()">
       <div class="form-group">
         <label for="name">Compound Name *</label>
         <input 
           type="text" 
           id="name" 
-          [(ngModel)]="compound.name" 
+          [(ngModel)]="name" 
           name="name"
-          required
-          class="form-control"
-          placeholder="Enter compound name">
+          placeholder="Enter compound name"
+          required>
       </div>
 
       <div class="form-group">
-        <label for="image">Image URL *</label>
+        <label for="image">Image URL</label>
         <input 
-          type="url" 
+          type="text" 
           id="image" 
-          [(ngModel)]="compound.image" 
+          [(ngModel)]="image" 
           name="image"
-          required
-          class="form-control"
-          placeholder="https://example.com/image.png">
-        <div class="image-preview" *ngIf="compound.image">
-          <p class="preview-label">Preview:</p>
-          <img [src]="compound.image" 
-               [alt]="compound.name"
-               (error)="onImageError($event)"
-               class="preview-img">
+          placeholder="Enter image URL">
+        <div class="image-preview" *ngIf="image">
+          <img [src]="image" 
+               alt="Preview"
+               onerror="this.src='https://via.placeholder.com/200x150?text=Invalid+URL'">
         </div>
       </div>
 
       <div class="form-group">
-        <label for="description">Description</label>
+        <label for="description">Description *</label>
         <textarea 
           id="description" 
-          [(ngModel)]="compound.description" 
+          [(ngModel)]="description" 
           name="description"
-          rows="6"
-          class="form-control"
-          placeholder="Enter compound description"></textarea>
+          rows="8"
+          placeholder="Enter compound description"
+          required></textarea>
       </div>
 
       <div class="form-actions">
-        <button type="submit" class="save-btn" [disabled]="saving">
-          {{ saving ? 'Saving...' : '💾 Save Changes' }}
-        </button>
-        <button type="button" (click)="goBack()" class="cancel-btn">
+        <button type="button" class="cancel-action-btn" (click)="cancel()">
           Cancel
+        </button>
+        <button type="submit" class="save-btn" [disabled]="saving">
+          {{ saving ? 'Saving...' : 'Save Changes' }}
         </button>
       </div>
     </form>
-
-    <div *ngIf="!compound" class="loading">
-      <div class="spinner"></div>
-      <p>Loading compound...</p>
-    </div>
   </div>
 </div>

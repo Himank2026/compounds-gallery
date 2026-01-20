@@ -1,54 +1,54 @@
-<div class="details-container">
-  <!-- Loading State -->
+<!-- src/app/components/compound-details/compound-details.component.html -->
+<div class="container">
+  <!-- Loading -->
   <div *ngIf="loading" class="loading">
     <div class="spinner"></div>
     <p>Loading compound details...</p>
   </div>
 
-  <!-- Error State -->
-  <div *ngIf="error" class="error-message">
-    <p>{{ error }}</p>
-    <button (click)="goBack()" class="back-btn">Go Back</button>
-  </div>
-
   <!-- Compound Details -->
-  <div *ngIf="!loading && !error && compound" class="details-content" [@fadeIn]>
-    <button (click)="goBack()" class="back-button">
-      ← Back to Gallery
-    </button>
+  <div *ngIf="!loading && compound" class="details-container">
+    <div class="header-actions">
+      <button class="back-btn" (click)="goBack()">← Back to Gallery</button>
+      <button class="edit-btn" (click)="editCompound()">✏️ Edit</button>
+    </div>
 
-    <div class="details-card">
-      <div class="image-section">
-        <img [src]="compound.image" 
-             [alt]="compound.name"
-             (error)="onImageError($event)"
-             class="compound-image">
-      </div>
+    <div class="details-content">
+     <div class="image-section">
+  <ng-container *ngIf="compound.image; else noImage">
+    <img
+      [src]="compound.image"
+      [alt]="compound.name"
+    />
+  </ng-container>
+
+  <ng-template #noImage>
+    <div class="no-image">
+      {{ compound.name }}
+    </div>
+  </ng-template>
+</div>
+
 
       <div class="info-section">
-        <h1 class="compound-title">{{ compound.name }}</h1>
-        
-        <div class="description-box">
+        <h1>{{ compound.name }}</h1>
+        <div class="description">
           <h2>Description</h2>
-          <p>{{ compound.description || 'No description available' }}</p>
+          <p>{{ compound.description }}</p>
         </div>
-
-        <div class="metadata" *ngIf="compound.date_modified">
-          <div class="meta-item">
-            <span class="meta-label">Last Modified:</span>
-            <span class="meta-value">{{ compound.date_modified | date:'medium' }}</span>
-          </div>
-        </div>
-
-        <div class="action-buttons">
-          <button (click)="editCompound()" class="edit-btn">
-            ✏️ Edit Compound
-          </button>
-          <button (click)="deleteCompound()" class="delete-btn">
-            🗑️ Delete
-          </button>
+        <div class="metadata">
+          <span class="meta-item"><strong>ID:</strong> {{ compound.id }}</span>
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="header-actions">
+  <button class="back-btn" (click)="goBack()">← Back to Gallery</button>
+  
+  <div class="action-buttons">
+    <button class="edit-btn" (click)="editCompound()">✏️ Edit</button>
+    <button class="delete-btn" (click)="deleteCompound()">🗑️ Delete</button>
   </div>
 </div>

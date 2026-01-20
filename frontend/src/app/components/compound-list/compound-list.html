@@ -1,0 +1,56 @@
+<!-- src/app/components/compound-list/compound-list.component.html -->
+<div class="container">
+  <header class="header">
+    <h1>🧪 Chemical Compounds Gallery</h1>
+    <p>Explore 30 unique chemical compounds</p>
+  </header>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading compounds...</p>
+  </div>
+
+  <!-- Compound Grid -->
+  <div *ngIf="!loading" class="compound-grid">
+    <div *ngFor="let compound of compounds" 
+         class="compound-card" 
+         (click)="viewDetails(compound.id)">
+      <div class="card-image">
+        <img [src]="compound.image" 
+     [alt]="compound.name" 
+     onerror="this.src='https://placehold.co/600x400?text=No+Image'">
+      </div>
+      <div class="card-content">
+        <h3>{{ compound.name }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div *ngIf="!loading" class="pagination">
+    <button 
+      class="page-btn" 
+      (click)="previousPage()" 
+      [disabled]="currentPage === 1">
+      ← Previous
+    </button>
+
+    <div class="page-numbers">
+      <button 
+        *ngFor="let page of pages" 
+        class="page-num" 
+        [class.active]="page === currentPage"
+        (click)="goToPage(page)">
+        {{ page }}
+      </button>
+    </div>
+
+    <button 
+      class="page-btn" 
+      (click)="nextPage()" 
+      [disabled]="currentPage === totalPages">
+      Next →
+    </button>
+  </div>
+</div>

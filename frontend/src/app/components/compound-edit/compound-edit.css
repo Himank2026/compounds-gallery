@@ -1,159 +1,171 @@
-.edit-container {
+/* src/app/components/compound-edit/compound-edit.component.css */
+.container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 20px;
 }
 
-.back-button {
-  background: #f8f9fa;
-  border: 2px solid #dee2e6;
-  color: #495057;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  margin-bottom: 2rem;
-  transition: all 0.3s ease;
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 60px 20px;
 }
 
-.back-button:hover {
-  background: #e9ecef;
-  transform: translateX(-5px);
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
 }
 
-.edit-card {
+/* Edit Container */
+.edit-container {
   background: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  animation: slideUp 0.5s ease-out;
 }
 
-.edit-title {
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #ecf0f1;
+}
+
+.header h1 {
   font-size: 2rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 2rem;
+  color: #2c3e50;
+  margin: 0;
 }
 
+.cancel-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cancel-btn:hover {
+  background: #c0392b;
+}
+
+/* Form */
 .edit-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 25px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
 }
 
 .form-group label {
+  font-size: 1rem;
   font-weight: 600;
   color: #2c3e50;
-  font-size: 1rem;
+  margin-bottom: 8px;
 }
 
-.form-control {
-  padding: 0.875rem 1rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
+.form-group input,
+.form-group textarea {
+  padding: 12px 16px;
   font-size: 1rem;
-  transition: all 0.3s ease;
+  border: 2px solid #ecf0f1;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
   font-family: inherit;
 }
 
-.form-control:focus {
+.form-group input:focus,
+.form-group textarea:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #3498db;
 }
 
-textarea.form-control {
+.form-group textarea {
   resize: vertical;
   min-height: 120px;
 }
 
 .image-preview {
-  margin-top: 1rem;
-  padding: 1rem;
-  background: #f8f9fa;
+  margin-top: 15px;
   border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #ecf0f1;
 }
 
-.preview-label {
-  font-size: 0.9rem;
-  color: #6c757d;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
+.image-preview img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  display: block;
 }
 
-.preview-img {
-  max-width: 100%;
-  max-height: 200px;
-  object-fit: contain;
-  border-radius: 8px;
-  background: white;
-  padding: 1rem;
-}
-
+/* Form Actions */
 .form-actions {
   display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
+  gap: 15px;
+  justify-content: flex-end;
+  margin-top: 10px;
 }
 
-.save-btn, .cancel-btn {
-  flex: 1;
-  padding: 1rem;
+.cancel-action-btn,
+.save-btn {
+  padding: 12px 30px;
+  font-size: 1rem;
   border: none;
   border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
+.cancel-action-btn {
+  background: #95a5a6;
+  color: white;
+}
+
+.cancel-action-btn:hover {
+  background: #7f8c8d;
+}
+
 .save-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #27ae60;
   color: white;
 }
 
 .save-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+  background: #229954;
 }
 
 .save-btn:disabled {
-  opacity: 0.6;
+  background: #bdc3c7;
   cursor: not-allowed;
 }
 
-.cancel-btn {
-  background: #f8f9fa;
-  color: #495057;
-  border: 2px solid #dee2e6;
-}
-
-.cancel-btn:hover {
-  background: #e9ecef;
-}
-
-.loading {
-  text-align: center;
-  padding: 3rem;
-}
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #667eea;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto 1rem;
+/* Animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes spin {
@@ -164,18 +176,19 @@ textarea.form-control {
 /* Responsive */
 @media (max-width: 768px) {
   .edit-container {
-    padding: 1rem;
+    padding: 20px;
   }
-  
-  .edit-card {
-    padding: 2rem;
+
+  .header h1 {
+    font-size: 1.5rem;
   }
-  
-  .edit-title {
-    font-size: 1.75rem;
-  }
-  
+
   .form-actions {
     flex-direction: column;
+  }
+
+  .cancel-action-btn,
+  .save-btn {
+    width: 100%;
   }
 }

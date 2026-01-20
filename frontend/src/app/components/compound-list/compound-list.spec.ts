@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CompoundGallery } from './compound-gallery';
+import { CompoundList } from './compound-list';
 
-describe('CompoundGallery', () => {
-  let component: CompoundGallery;
-  let fixture: ComponentFixture<CompoundGallery>;
+describe('CompoundList', () => {
+  let component: CompoundList;
+  let fixture: ComponentFixture<CompoundList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CompoundGallery]
+      imports: [CompoundList]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CompoundGallery);
+    fixture = TestBed.createComponent(CompoundList);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

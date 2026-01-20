@@ -1,23 +1,145 @@
-.details-container {
+/* src/app/components/compound-details/compound-details.component.css */
+.container {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 2rem;
-  min-height: 80vh;
+  padding: 20px;
 }
 
-.loading, .error-message {
+/* Loading */
+.loading {
   text-align: center;
-  padding: 4rem 2rem;
+  padding: 60px 20px;
 }
 
 .spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
   width: 50px;
   height: 50px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #667eea;
-  border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin: 0 auto 1rem;
+  margin: 0 auto 20px;
+}
+
+/* Header Actions */
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.back-btn, .edit-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-btn {
+  background: #95a5a6;
+  color: white;
+}
+
+.back-btn:hover {
+  background: #7f8c8d;
+}
+
+.edit-btn {
+  background: #3498db;
+  color: white;
+}
+
+.edit-btn:hover {
+  background: #2980b9;
+}
+
+/* Details Content */
+.details-content {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  animation: slideUp 0.6s ease-out;
+}
+
+.image-section {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  background: #f8f9fa;
+}
+
+.image-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info-section {
+  padding: 40px;
+}
+
+.info-section h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.description {
+  margin-bottom: 30px;
+}
+
+.description h2 {
+  font-size: 1.5rem;
+  color: #34495e;
+  margin-bottom: 15px;
+}
+
+.description p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+  text-align: justify;
+}
+
+.metadata {
+  padding-top: 20px;
+  border-top: 2px solid #ecf0f1;
+}
+
+.meta-item {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #ecf0f1;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes spin {
@@ -25,187 +147,47 @@
   100% { transform: rotate(360deg); }
 }
 
-.back-button {
-  background: #f8f9fa;
-  border: 2px solid #dee2e6;
-  color: #495057;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  margin-bottom: 2rem;
-  transition: all 0.3s ease;
-}
+/* Responsive */
+@media (max-width: 768px) {
+  .info-section {
+    padding: 20px;
+  }
 
-.back-button:hover {
-  background: #e9ecef;
-  transform: translateX(-5px);
-}
+  .info-section h1 {
+    font-size: 2rem;
+  }
 
-.details-card {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 2rem;
+  .image-section {
+    height: 300px;
+  }
 }
-
-.image-section {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  padding: 3rem;
+/* Container for both buttons */
+.header-actions {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-}
-
-.compound-image {
-  max-width: 100%;
-  max-height: 400px;
-  object-fit: contain;
-  border-radius: 8px;
-  animation: fadeInScale 0.5s ease-out;
-}
-
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.info-section {
-  padding: 3rem;
-}
-
-.compound-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 2rem;
-}
-
-.description-box {
-  background: #f8f9fa;
-  padding: 1.5rem;
-  border-radius: 12px;
-  margin-bottom: 2rem;
-}
-
-.description-box h2 {
-  font-size: 1.25rem;
-  color: #2c3e50;
-  margin-bottom: 1rem;
-}
-
-.description-box p {
-  color: #495057;
-  line-height: 1.8;
-  font-size: 1rem;
-}
-
-.metadata {
-  margin-bottom: 2rem;
-}
-
-.meta-item {
-  display: flex;
-  gap: 1rem;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid #e9ecef;
-}
-
-.meta-label {
-  font-weight: 600;
-  color: #6c757d;
-  min-width: 130px;
-}
-
-.meta-value {
-  color: #495057;
+  margin-bottom: 20px;
 }
 
 .action-buttons {
   display: flex;
-  gap: 1rem;
+  gap: 10px; /* Space between Edit and Delete */
 }
 
-.edit-btn, .delete-btn {
-  flex: 1;
-  padding: 1rem;
+/* Red Delete Button Style */
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
   border: none;
+  padding: 10px 20px;
   border-radius: 8px;
   font-weight: 600;
-  font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-}
-
-.edit-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.edit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
-}
-
-.delete-btn {
-  background: #fff;
-  color: #e74c3c;
-  border: 2px solid #e74c3c;
 }
 
 .delete-btn:hover {
-  background: #e74c3c;
-  color: white;
+  background-color: #c0392b;
   transform: translateY(-2px);
-}
-
-.back-btn {
-  margin-top: 1rem;
-  padding: 0.75rem 1.5rem;
-  background: #667eea;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-.back-btn:hover {
-  background: #5568d3;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .details-container {
-    padding: 1rem;
-  }
-  
-  .details-card {
-    grid-template-columns: 1fr;
-  }
-  
-  .compound-title {
-    font-size: 2rem;
-  }
-  
-  .info-section {
-    padding: 2rem;
-  }
-  
-  .action-buttons {
-    flex-direction: column;
-  }
+  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
 }
