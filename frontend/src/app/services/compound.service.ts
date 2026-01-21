@@ -22,7 +22,7 @@ export interface PaginatedResponse {
   providedIn: 'root'
 })
 export class CompoundService {
-  private apiUrl = 'http://localhost:3000/api/compounds'; // Change this to your backend URL
+  private apiUrl = 'http://localhost:3000/api/compounds';
 
   constructor(private http: HttpClient) { }
 
@@ -36,8 +36,18 @@ export class CompoundService {
     return this.http.get<Compound>(`${this.apiUrl}/${id}`);
   }
 
+  // Create new compound
+  createCompound(compound: Partial<Compound>): Observable<any> {
+    return this.http.post<any>(this.apiUrl, compound);
+  }
+
   // Update compound
   updateCompound(id: number, compound: Partial<Compound>): Observable<Compound> {
     return this.http.put<Compound>(`${this.apiUrl}/${id}`, compound);
+  }
+
+  // Delete compound
+  deleteCompound(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
 }

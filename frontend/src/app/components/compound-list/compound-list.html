@@ -1,8 +1,15 @@
-<!-- src/app/components/compound-list/compound-list.component.html -->
+<!-- src/app/components/compound-list/compound-list.html -->
 <div class="container">
   <header class="header">
-    <h1>🧪 Chemical Compounds Gallery</h1>
-    <p>Explore 30 unique chemical compounds</p>
+    <div class="header-content">
+      <div>
+        <h1>🧪 Chemical Compounds Gallery</h1>
+        <p>Explore 30 unique chemical compounds</p>
+      </div>
+      <button class="create-btn" (click)="createNew()">
+        ✨ Add New Compound
+      </button>
+    </div>
   </header>
 
   <!-- Loading Spinner -->
@@ -18,8 +25,8 @@
          (click)="viewDetails(compound.id)">
       <div class="card-image">
         <img [src]="compound.image" 
-     [alt]="compound.name" 
-     onerror="this.src='https://placehold.co/600x400?text=No+Image'">
+             [alt]="compound.name" 
+             onerror="this.src='https://placehold.co/600x400?text=No+Image'">
       </div>
       <div class="card-content">
         <h3>{{ compound.name }}</h3>

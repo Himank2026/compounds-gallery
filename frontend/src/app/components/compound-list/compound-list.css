@@ -1,4 +1,4 @@
-/* src/app/components/compound-list/compound-list.component.css */
+/* src/app/components/compound-list/compound-list.css */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -6,9 +6,16 @@
 }
 
 .header {
-  text-align: center;
   margin-bottom: 40px;
   animation: fadeIn 0.6s ease-in;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .header h1 {
@@ -20,6 +27,25 @@
 .header p {
   font-size: 1.1rem;
   color: #7f8c8d;
+}
+
+.create-btn {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+.create-btn:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
 }
 
 /* Loading Spinner */
@@ -173,6 +199,15 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .create-btn {
+    width: 100%;
+  }
+
   .compound-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 15px;

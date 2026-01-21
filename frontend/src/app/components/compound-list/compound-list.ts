@@ -27,31 +27,34 @@ export class CompoundListComponent implements OnInit {
     this.loadCompounds();
   }
 
-loadCompounds(): void {
-  this.loading = true;
-  this.compoundService.getCompounds(this.currentPage, this.limit)
-    .subscribe({
-      next: (response: any) => {
-        // Log the response to verify the fix
-        console.log('Backend Response:', response);
+  loadCompounds(): void {
+    this.loading = true;
+    this.compoundService.getCompounds(this.currentPage, this.limit)
+      .subscribe({
+        next: (response: any) => {
+          console.log('Backend Response:', response);
 
-        this.compounds = response.data;
-        
-        // Access the 'pagination' object from your backend
-        if (response.pagination) {
-          this.totalPages = response.pagination.totalPages;
+          this.compounds = response.data;
+          
+          if (response.pagination) {
+            this.totalPages = response.pagination.totalPages;
+          }
+          
+          this.loading = false;
+        },
+        error: (error) => {
+          console.error('Error loading compounds:', error);
+          this.loading = false;
         }
-        
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error loading compounds:', error);
-        this.loading = false;
-      }
-    });
-}
+      });
+  }
+
   viewDetails(id: number): void {
     this.router.navigate(['/compounds', id]);
+  }
+
+  createNew(): void {
+    this.router.navigate(['/compounds/new']);
   }
 
   previousPage(): void {

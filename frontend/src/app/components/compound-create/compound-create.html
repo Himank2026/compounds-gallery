@@ -1,0 +1,66 @@
+<!-- src/app/components/compound-create/compound-create.html -->
+<div class="container">
+  <header class="header">
+    <h1>✨ Add New Compound</h1>
+    <p>Create a new chemical compound entry</p>
+  </header>
+
+  <div class="form-card">
+    <form (ngSubmit)="createCompound()">
+      <!-- Name Field -->
+      <div class="form-group">
+        <label for="name">Compound Name *</label>
+        <input 
+          type="text" 
+          id="name" 
+          [(ngModel)]="compound.name" 
+          name="name"
+          placeholder="e.g., Caffeine, Aspirin, Glucose"
+          required>
+      </div>
+
+      <!-- Image URL Field -->
+      <div class="form-group">
+        <label for="image">Image URL *</label>
+        <input 
+          type="url" 
+          id="image" 
+          [(ngModel)]="compound.image" 
+          name="image"
+          placeholder="https://example.com/compound-image.png"
+          required>
+        
+        <!-- Image Preview -->
+        <div *ngIf="compound.image" class="image-preview">
+          <p class="preview-label">Preview:</p>
+          <img 
+            [src]="compound.image" 
+            [alt]="compound.name || 'Preview'"
+            (error)="onImageError($event)">
+        </div>
+      </div>
+
+      <!-- Description Field -->
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea 
+          id="description" 
+          [(ngModel)]="compound.description" 
+          name="description"
+          rows="6"
+          placeholder="Enter a detailed description of the compound..."></textarea>
+        <small class="hint">Optional: Provide information about the compound's properties and uses</small>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="saving">
+          {{ saving ? '⏳ Creating...' : '✨ Create Compound' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="cancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
