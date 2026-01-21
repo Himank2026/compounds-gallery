@@ -31,3 +31,8 @@ Tools: Git, MySQL Workbench, VS Code
 Outcome
 
 The application allows users to browse, view, add, update, and delete chemical compounds through a clean UI backed by a structured relational database and REST API.
+
+
+
+
+Link to video: https://drive.google.com/file/d/1qbXl6z5PtPRzMay5g3btgt10RzSZBqSc/view?usp=sharing
