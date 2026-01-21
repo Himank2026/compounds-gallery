@@ -27,24 +27,24 @@ export class CompoundDetailsComponent implements OnInit {
   }
 
   loadCompound(id: number): void {
-  this.loading = true;
-  this.compoundService.getCompoundById(id).subscribe({
-    next: (response: any) => {
-      // Since the data is inside response.data, we assign that to our variable
-      if (response && response.success) {
-        this.compound = response.data;
-      } else {
-        this.compound = response; // Fallback in case the structure changes
+    this.loading = true;
+    this.compoundService.getCompoundById(id).subscribe({
+      next: (response: any) => {
+        // Since the data is inside response.data, we assign that to our variable
+        if (response && response.success) {
+          this.compound = response.data;
+        } else {
+          this.compound = response; // Fallback in case the structure changes
+        }
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error loading compound:', error);
+        this.loading = false;
+        this.router.navigate(['/compounds']);
       }
-      this.loading = false;
-    },
-    error: (error) => {
-      console.error('Error loading compound:', error);
-      this.loading = false;
-      this.router.navigate(['/compounds']);
-    }
-  });
-}
+    });
+  }
 
   goBack(): void {
     this.router.navigate(['/compounds']);
@@ -55,7 +55,28 @@ export class CompoundDetailsComponent implements OnInit {
       this.router.navigate(['/compounds', this.compound.id, 'edit']);
     }
   }
-  
+
+  deleteCompound(): void {
+    if (!this.compound) return;
+
+    // Confirmation dialog
+    const confirmed = confirm(
+      `Are you sure you want to delete "${this.compound.name}"?\n\nThis action cannot be undone.`
+    );
+
+    if (!confirmed) return;
+
+    // Delete the compound
+    this.compoundService.deleteCompound(this.compound.id).subscribe({
+      next: (response: any) => {
+        console.log('Delete response:', response);
+        alert('Compound deleted successfully!');
+        this.router.navigate(['/compounds']);
+      },
+      error: (error) => {
+        console.error('Error deleting compound:', error);
+        alert('Failed to delete compound. Please try again.');
+      }
+    });
+  }
 }
-
-
